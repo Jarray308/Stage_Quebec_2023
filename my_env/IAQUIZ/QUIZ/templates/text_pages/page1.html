@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page 1</title>
+    <style>
+        body{
+            background-image: url('https://png.pngtree.com/background/20210709/original/pngtree-robot-artificial-intelligence-robot-blue-background-the-internet-picture-image_926814.jpg');
+            background-repeat: repeat;
+
+        }
+        .txt{
+        font-style: oblique;
+        font-size: 15px;
+        background-color: white;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+       border-radius:2px;
+
+  border-color: blue;
+  border: 15px solid rgb(244, 244, 244);
+    }
+
+    .cn{
+    color: azure;
+    width: 250px;
+    height: 40px;
+    background: #1613b9;
+    border: none;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .4s ease;
+    border-radius: 3em;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ .cn a{
+    font-weight: bold;
+    text-decoration: none;
+    color: #ffffffed;
+    transition: .3s ease;
+}
+
+.cn:hover{
+    background-color: #3a14d0;
+}
+
+    </style>
+</head>
+<body style="background-image: url('https://previews.123rf.com/images/rufous/rufous2304/rufous230418669/203862212-system-artificial-intelligence-chatgpt-chat-bot-ai-technology-smart-robot-ai-chat-gpt-application.jpg') ; background-repeat: no-repeat;">
+    <!-- start Quiz button -->
+   
+  <div>
+    <form method="post">
+        {% csrf_token %}
+        <textarea class="txt" name="text"  id="myTextarea"   rows="30" cols="70" onmouseout="toggleSubmitButton()"></textarea><br>
+        <button  id="submitButton" style="display: block;" class="cn" type="submit" value="Submit">Submit</button>
+    </form>
+</div>
+
+
+<script>
+    function toggleSubmitButton() {
+      const textarea = document.getElementById('myTextarea');
+      const submitButton = document.getElementById('submitButton');
+
+      if (textarea.value == '') {
+        submitButton.style.display = 'none';
+      } else {
+        submitButton.style.display = 'block';
+      }
+    }
+
+    function loadFileContent() {
+            const fileInput = document.getElementById('fileInput');
+            const textarea = document.getElementById('myTextarea');
+
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    textarea.value = event.target.result;
+                    toggleSubmitButton(); // Call this to show/hide the submit button based on textarea content
+                };
+                reader.readAsText(file);
+            }
+        }
+
+
+  </script>
+</body>
+</html>
