@@ -342,16 +342,31 @@ def person(text):
             else:
                 after_phrase = text[ent_end:].strip()
             
-            options = [
-                after_phrase,
-                ' '.join(after_phrase.split()[1:]),  # Remove the first word and join back into a string
-                ' '.join(after_phrase.split()[:-2]),  # Remove the last word and join back into a string
-                "aucune réponse"
-            ]
+            # If after_phrase contains 1 or 2 words, take the phrase before the person's name
+            if len(after_phrase.split()) <= 2:
+                before_phrase_end = ent_start
+                before_phrase_start = before_phrase_end
+                while before_phrase_start > 0 and text[before_phrase_start - 1] not in [',', '.', '!', '?']:
+                    before_phrase_start -= 1
+                before_phrase = text[before_phrase_start:before_phrase_end].strip()
+                options = [
+                    before_phrase,
+                    ' '.join(before_phrase.split()[:6]),
+                  # Remove the first word and join back into a string
+                    ' '.join(before_phrase.split()[:4]),  # Remove the last word and join back into a string
+                    "no response"
+                ]
+            else:
+                options = [
+                    after_phrase,
+                    ' '.join(after_phrase.split()[1:]),
+                    ' '.join(after_phrase.split()[:-2]),
+                    "no response"
+                ]
 
             person_info.append({
                 "Question": ent.text + " ...?",
-                "Option_Correct": after_phrase.split(',')[0].split('.')[0],
+                "Option_Correct": options[0].split(',')[0].split('.')[0],
                 "Options": options
             })
             break
